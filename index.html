@@ -1,0 +1,97 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>My Fitness Tracker</title>
+  <style>
+    body {
+      font-family: 'Segoe UI', sans-serif;
+      margin: 0;
+      padding: 1rem;
+      background: #f5f5f5;
+      color: #333;
+    }
+    h1 {
+      text-align: center;
+      margin-bottom: 1rem;
+    }
+    .actions {
+      display: flex;
+      justify-content: space-between;
+      gap: 1rem;
+      margin-bottom: 2rem;
+    }
+    .actions button {
+      flex: 1;
+      padding: 1rem;
+      font-size: 1rem;
+      border: none;
+      border-radius: 10px;
+      background-color: #007acc;
+      color: white;
+      cursor: pointer;
+    }
+    .cards {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 1rem;
+      justify-content: space-around;
+    }
+    .card {
+      background-color: white;
+      padding: 1rem;
+      border-radius: 10px;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+      flex: 1 1 200px;
+      max-width: 250px;
+      cursor: pointer;
+      transition: all 0.2s;
+      text-align: center;
+    }
+    .card:hover {
+      transform: scale(1.02);
+    }
+    .card h2 {
+      font-size: 1rem;
+      margin-bottom: 0.5rem;
+    }
+    .card p {
+      font-size: 1.5rem;
+      font-weight: bold;
+      margin: 0;
+    }
+    @media (max-width: 600px) {
+      .actions {
+        flex-direction: column;
+      }
+    }
+  </style>
+</head>
+<body>
+  <h1>🏋️ My Fitness Tracker</h1>
+
+  <div class="actions">
+    <button onclick="alert('Log Workout Form')">🏃 Log Workout</button>
+    <button onclick="alert('Log Weight Form')">⚖️ Log Weight</button>
+  </div>
+
+  <div class="cards">
+    <div class="card" onclick="alert('Show Workouts')">
+      <h2>🏃 Workouts This Week</h2>
+      <p id="workouts-count">4</p>
+    </div>
+
+    <div class="card" onclick="alert('Show Weight Chart')">
+      <h2>⚖️ Current Weight</h2>
+      <p id="current-weight">183.2 lbs</p>
+    </div>
+
+    <div class="card" onclick="alert('Show Birthdays')">
+      <h2>🎂 Birthdays This Week</h2>
+      <p id="birthday-count">2</p>
+    </div>
+  </div>
+</body>
+</html>
