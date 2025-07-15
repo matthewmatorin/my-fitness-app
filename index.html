@@ -10,7 +10,7 @@
       font-family: 'Segoe UI', sans-serif;
       margin: 0;
       padding: 0;
-      background: #f5f5f5;
+      background: #f8f9fa;
     }
     header {
       background: #007acc;
@@ -21,15 +21,14 @@
     nav {
       display: flex;
       justify-content: space-around;
-      background: #eee;
-      padding: 0.5rem;
+      background: #e9ecef;
+      padding: 0.75rem;
     }
     nav button {
       background: none;
       border: none;
       font-size: 1rem;
       cursor: pointer;
-      padding: 0.5rem;
     }
     nav button:hover {
       color: #007acc;
@@ -43,7 +42,7 @@
       flex-wrap: wrap;
       gap: 1rem;
       justify-content: center;
-      margin-bottom: 2rem;
+      margin: 1rem 0;
     }
     .card {
       background: white;
@@ -61,18 +60,29 @@
     .hidden {
       display: none;
     }
-    form {
-      margin-top: 1rem;
+    .modal {
+      display: none;
+      position: fixed;
+      z-index: 10;
+      left: 0; top: 0;
+      width: 100%; height: 100%;
+      background: rgba(0,0,0,0.5);
+      justify-content: center;
+      align-items: center;
+    }
+    .modal-content {
       background: white;
-      padding: 1rem;
+      padding: 2rem;
       border-radius: 10px;
-      box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+      width: 90%;
+      max-width: 400px;
     }
     form input, form select, form textarea {
       width: 100%;
       margin-top: 0.5rem;
       padding: 0.5rem;
       margin-bottom: 1rem;
+      font-size: 1rem;
     }
     form button {
       padding: 0.5rem 1rem;
@@ -83,7 +93,13 @@
       border-radius: 5px;
     }
     .section {
-      margin-top: 2rem;
+      margin-top: 1.5rem;
+    }
+    @media (max-width: 600px) {
+      .cards {
+        flex-direction: column;
+        align-items: center;
+      }
     }
   </style>
 </head>
@@ -102,32 +118,8 @@
     <!-- Dashboard Tab -->
     <div id="dashboard" class="tab">
       <div class="section">
-        <form id="logWorkoutForm">
-          <h3>➕ Log Workout</h3>
-          <input type="date" required />
-          <select required>
-            <option value="">Select Type</option>
-            <option>Walk</option>
-            <option>Run</option>
-            <option>Lift</option>
-            <option>Tennis</option>
-            <option>Bike</option>
-          </select>
-          <input type="number" placeholder="Duration (mins)" required />
-          <input type="text" placeholder="Zone or Distance or Muscle Groups" />
-          <button type="submit">Save Workout</button>
-        </form>
-      </div>
-
-      <div class="section">
-        <form id="logWeightForm">
-          <h3>➕ Log Weight</h3>
-          <input type="date" required />
-          <input type="number" placeholder="Weight (lbs)" required />
-          <input type="text" placeholder="Body Fat %" />
-          <textarea placeholder="Notes"></textarea>
-          <button type="submit">Save Weight</button>
-        </form>
+        <button onclick="openModal('workoutModal')">➕ Log Workout</button>
+        <button onclick="openModal('weightModal')">➕ Log Weight</button>
       </div>
 
       <div class="cards">
@@ -147,17 +139,17 @@
 
       <div id="workoutsSection" class="hidden section">
         <h3>📅 Last 2 Weeks of Workouts</h3>
-        <p>[Workout log will go here]</p>
+        <p>[Workout log goes here]</p>
       </div>
 
       <div id="weightSection" class="hidden section">
         <h3>📈 Weight Chart</h3>
-        <p>[Weight chart with filters]</p>
+        <p>[Chart placeholder with filters]</p>
       </div>
 
       <div id="birthdaysSection" class="hidden section">
-        <h3>🎉 Birthdays This Week</h3>
-        <p>[Birthday list will go here]</p>
+        <h3>🎉 Birthdays</h3>
+        <p>[Birthday list goes here]</p>
         <form>
           <input type="text" placeholder="Name" required />
           <input type="date" required />
@@ -171,15 +163,48 @@
     <!-- Insights Tab -->
     <div id="insights" class="tab hidden">
       <h3>📊 Weekly Insights</h3>
-      <p>[This will show generated insights based on your data.]</p>
+      <p>[This will show generated insights.]</p>
     </div>
 
     <!-- Settings Tab -->
     <div id="settings" class="tab hidden">
       <h3>⚙️ Export Your Data</h3>
-      <p>[Download links to export workouts, weights, or birthdays]</p>
+      <p>[Links to export CSV files]</p>
     </div>
+  </div>
 
+  <!-- Modals -->
+  <div class="modal" id="workoutModal">
+    <div class="modal-content">
+      <h3>Log Workout</h3>
+      <form onsubmit="closeModal('workoutModal'); return false;">
+        <input type="date" required />
+        <select required>
+          <option value="">Select Type</option>
+          <option>Walk</option>
+          <option>Run</option>
+          <option>Lift</option>
+          <option>Tennis</option>
+          <option>Bike</option>
+        </select>
+        <input type="number" placeholder="Duration (mins)" required />
+        <input type="text" placeholder="Zone/Distance/Muscles" />
+        <button type="submit">Save Workout</button>
+      </form>
+    </div>
+  </div>
+
+  <div class="modal" id="weightModal">
+    <div class="modal-content">
+      <h3>Log Weight</h3>
+      <form onsubmit="closeModal('weightModal'); return false;">
+        <input type="date" required />
+        <input type="number" placeholder="Weight (lbs)" required />
+        <input type="text" placeholder="Body Fat %" />
+        <textarea placeholder="Notes"></textarea>
+        <button type="submit">Save Weight</button>
+      </form>
+    </div>
   </div>
 
   <script>
@@ -192,6 +217,21 @@
       const el = document.getElementById(id);
       el.classList.toggle("hidden");
     }
+
+    function openModal(id) {
+      document.getElementById(id).style.display = "flex";
+    }
+
+    function closeModal(id) {
+      document.getElementById(id).style.display = "none";
+    }
+
+    // Hide modals when clicking outside content
+    window.onclick = function(event) {
+      if (event.target.classList.contains("modal")) {
+        event.target.style.display = "none";
+      }
+    };
   </script>
 </body>
 </html>
