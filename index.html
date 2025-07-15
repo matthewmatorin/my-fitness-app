@@ -10,19 +10,20 @@
       font-family: 'Segoe UI', sans-serif;
       margin: 0;
       padding: 0;
-      background: #f8f9fa;
+      background: #f2f4f7;
     }
     header {
-      background: #007acc;
+      background: #004080;
       color: white;
-      padding: 1rem;
+      padding: 1.25rem;
       text-align: center;
     }
     nav {
       display: flex;
       justify-content: space-around;
-      background: #e9ecef;
-      padding: 0.75rem;
+      background: #e0e0e0;
+      padding: 0.8rem 0;
+      font-weight: 600;
     }
     nav button {
       background: none;
@@ -31,44 +32,91 @@
       cursor: pointer;
     }
     nav button:hover {
-      color: #007acc;
-      font-weight: bold;
+      color: #004080;
     }
-    .content {
+    .container {
+      max-width: 960px;
+      margin: auto;
       padding: 1rem;
+    }
+    .quick-actions {
+      text-align: center;
+      margin: 1.5rem 0;
+    }
+    .quick-actions button {
+      margin: 0.5rem;
+      padding: 0.6rem 1.2rem;
+      font-size: 1rem;
+      background: #004080;
+      color: white;
+      border: none;
+      border-radius: 8px;
+      cursor: pointer;
     }
     .cards {
       display: flex;
+      justify-content: space-between;
       flex-wrap: wrap;
       gap: 1rem;
-      justify-content: center;
-      margin: 1rem 0;
     }
     .card {
+      flex: 1 1 30%;
       background: white;
-      border-radius: 10px;
-      box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+      border-radius: 12px;
       padding: 1rem;
+      box-shadow: 0 4px 8px rgba(0,0,0,0.08);
       text-align: center;
       cursor: pointer;
-      flex: 1 1 200px;
-      max-width: 250px;
+      transition: all 0.2s ease;
     }
     .card:hover {
-      background: #f0f8ff;
+      transform: translateY(-2px);
+      background: #f8fbff;
     }
-    .hidden {
+    .card h2 {
+      font-size: 1.25rem;
+      margin-bottom: 0.5rem;
+    }
+    .card p {
+      font-size: 1.75rem;
+      margin: 0;
+    }
+    .section {
+      margin-top: 2rem;
+      background: white;
+      padding: 1.5rem;
+      border-radius: 12px;
+      box-shadow: 0 2px 6px rgba(0,0,0,0.05);
+    }
+    .section.hidden {
       display: none;
+    }
+    form {
+      margin-top: 1rem;
+    }
+    form input, form select, form textarea {
+      width: 100%;
+      margin: 0.4rem 0 1rem 0;
+      padding: 0.5rem;
+      font-size: 1rem;
+    }
+    form button {
+      padding: 0.5rem 1rem;
+      background: #004080;
+      color: white;
+      border: none;
+      cursor: pointer;
+      border-radius: 5px;
     }
     .modal {
       display: none;
       position: fixed;
-      z-index: 10;
-      left: 0; top: 0;
-      width: 100%; height: 100%;
-      background: rgba(0,0,0,0.5);
+      top: 0; left: 0;
+      width: 100vw; height: 100vh;
+      background: rgba(0,0,0,0.4);
       justify-content: center;
       align-items: center;
+      z-index: 10;
     }
     .modal-content {
       background: white;
@@ -77,28 +125,9 @@
       width: 90%;
       max-width: 400px;
     }
-    form input, form select, form textarea {
-      width: 100%;
-      margin-top: 0.5rem;
-      padding: 0.5rem;
-      margin-bottom: 1rem;
-      font-size: 1rem;
-    }
-    form button {
-      padding: 0.5rem 1rem;
-      background: #007acc;
-      color: white;
-      border: none;
-      cursor: pointer;
-      border-radius: 5px;
-    }
-    .section {
-      margin-top: 1.5rem;
-    }
-    @media (max-width: 600px) {
+    @media (max-width: 768px) {
       .cards {
         flex-direction: column;
-        align-items: center;
       }
     }
   </style>
@@ -113,11 +142,11 @@
     <button onclick="showTab('settings')">⚙️ Settings</button>
   </nav>
 
-  <div class="content">
+  <div class="container">
 
     <!-- Dashboard Tab -->
     <div id="dashboard" class="tab">
-      <div class="section">
+      <div class="quick-actions">
         <button onclick="openModal('workoutModal')">➕ Log Workout</button>
         <button onclick="openModal('weightModal')">➕ Log Weight</button>
       </div>
@@ -137,19 +166,19 @@
         </div>
       </div>
 
-      <div id="workoutsSection" class="hidden section">
+      <div id="workoutsSection" class="section hidden">
         <h3>📅 Last 2 Weeks of Workouts</h3>
-        <p>[Workout log goes here]</p>
+        <p>[Workout log data goes here]</p>
       </div>
 
-      <div id="weightSection" class="hidden section">
+      <div id="weightSection" class="section hidden">
         <h3>📈 Weight Chart</h3>
-        <p>[Chart placeholder with filters]</p>
+        <p>[Weight chart with filters here]</p>
       </div>
 
-      <div id="birthdaysSection" class="hidden section">
+      <div id="birthdaysSection" class="section hidden">
         <h3>🎉 Birthdays</h3>
-        <p>[Birthday list goes here]</p>
+        <p>[List of this week’s birthdays]</p>
         <form>
           <input type="text" placeholder="Name" required />
           <input type="date" required />
@@ -162,18 +191,22 @@
 
     <!-- Insights Tab -->
     <div id="insights" class="tab hidden">
-      <h3>📊 Weekly Insights</h3>
-      <p>[This will show generated insights.]</p>
+      <div class="section">
+        <h3>📊 Weekly Insights</h3>
+        <p>[Generated insights will appear here]</p>
+      </div>
     </div>
 
     <!-- Settings Tab -->
     <div id="settings" class="tab hidden">
-      <h3>⚙️ Export Your Data</h3>
-      <p>[Links to export CSV files]</p>
+      <div class="section">
+        <h3>⚙️ Export Your Data</h3>
+        <p>[Download links for workouts, weights, birthdays]</p>
+      </div>
     </div>
   </div>
 
-  <!-- Modals -->
+  <!-- Workout Modal -->
   <div class="modal" id="workoutModal">
     <div class="modal-content">
       <h3>Log Workout</h3>
@@ -194,6 +227,7 @@
     </div>
   </div>
 
+  <!-- Weight Modal -->
   <div class="modal" id="weightModal">
     <div class="modal-content">
       <h3>Log Weight</h3>
@@ -226,7 +260,6 @@
       document.getElementById(id).style.display = "none";
     }
 
-    // Hide modals when clicking outside content
     window.onclick = function(event) {
       if (event.target.classList.contains("modal")) {
         event.target.style.display = "none";
