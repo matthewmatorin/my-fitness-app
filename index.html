@@ -3,95 +3,195 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <meta name="viewport" content='width=device-width, initial-scale=1.0'/>
   <title>My Fitness Tracker</title>
   <style>
     body {
       font-family: 'Segoe UI', sans-serif;
       margin: 0;
-      padding: 1rem;
+      padding: 0;
       background: #f5f5f5;
-      color: #333;
     }
-    h1 {
-      text-align: center;
-      margin-bottom: 1rem;
-    }
-    .actions {
-      display: flex;
-      justify-content: space-between;
-      gap: 1rem;
-      margin-bottom: 2rem;
-    }
-    .actions button {
-      flex: 1;
-      padding: 1rem;
-      font-size: 1rem;
-      border: none;
-      border-radius: 10px;
-      background-color: #007acc;
+    header {
+      background: #007acc;
       color: white;
+      padding: 1rem;
+      text-align: center;
+    }
+    nav {
+      display: flex;
+      justify-content: space-around;
+      background: #eee;
+      padding: 0.5rem;
+    }
+    nav button {
+      background: none;
+      border: none;
+      font-size: 1rem;
       cursor: pointer;
+      padding: 0.5rem;
+    }
+    nav button:hover {
+      color: #007acc;
+      font-weight: bold;
+    }
+    .content {
+      padding: 1rem;
     }
     .cards {
       display: flex;
       flex-wrap: wrap;
       gap: 1rem;
-      justify-content: space-around;
+      justify-content: center;
+      margin-bottom: 2rem;
     }
     .card {
-      background-color: white;
-      padding: 1rem;
+      background: white;
       border-radius: 10px;
-      box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+      box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+      padding: 1rem;
+      text-align: center;
+      cursor: pointer;
       flex: 1 1 200px;
       max-width: 250px;
-      cursor: pointer;
-      transition: all 0.2s;
-      text-align: center;
     }
     .card:hover {
-      transform: scale(1.02);
+      background: #f0f8ff;
     }
-    .card h2 {
-      font-size: 1rem;
-      margin-bottom: 0.5rem;
+    .hidden {
+      display: none;
     }
-    .card p {
-      font-size: 1.5rem;
-      font-weight: bold;
-      margin: 0;
+    form {
+      margin-top: 1rem;
+      background: white;
+      padding: 1rem;
+      border-radius: 10px;
+      box-shadow: 0 2px 6px rgba(0,0,0,0.1);
     }
-    @media (max-width: 600px) {
-      .actions {
-        flex-direction: column;
-      }
+    form input, form select, form textarea {
+      width: 100%;
+      margin-top: 0.5rem;
+      padding: 0.5rem;
+      margin-bottom: 1rem;
+    }
+    form button {
+      padding: 0.5rem 1rem;
+      background: #007acc;
+      color: white;
+      border: none;
+      cursor: pointer;
+      border-radius: 5px;
+    }
+    .section {
+      margin-top: 2rem;
     }
   </style>
 </head>
 <body>
-  <h1>🏋️ My Fitness Tracker</h1>
+  <header>
+    <h1>🏋️ My Fitness Tracker</h1>
+  </header>
+  <nav>
+    <button onclick="showTab('dashboard')">🏠 Dashboard</button>
+    <button onclick="showTab('insights')">📊 Insights</button>
+    <button onclick="showTab('settings')">⚙️ Settings</button>
+  </nav>
 
-  <div class="actions">
-    <button onclick="alert('Log Workout Form')">🏃 Log Workout</button>
-    <button onclick="alert('Log Weight Form')">⚖️ Log Weight</button>
+  <div class="content">
+
+    <!-- Dashboard Tab -->
+    <div id="dashboard" class="tab">
+      <div class="section">
+        <form id="logWorkoutForm">
+          <h3>➕ Log Workout</h3>
+          <input type="date" required />
+          <select required>
+            <option value="">Select Type</option>
+            <option>Walk</option>
+            <option>Run</option>
+            <option>Lift</option>
+            <option>Tennis</option>
+            <option>Bike</option>
+          </select>
+          <input type="number" placeholder="Duration (mins)" required />
+          <input type="text" placeholder="Zone or Distance or Muscle Groups" />
+          <button type="submit">Save Workout</button>
+        </form>
+      </div>
+
+      <div class="section">
+        <form id="logWeightForm">
+          <h3>➕ Log Weight</h3>
+          <input type="date" required />
+          <input type="number" placeholder="Weight (lbs)" required />
+          <input type="text" placeholder="Body Fat %" />
+          <textarea placeholder="Notes"></textarea>
+          <button type="submit">Save Weight</button>
+        </form>
+      </div>
+
+      <div class="cards">
+        <div class="card" onclick="toggleSection('workoutsSection')">
+          <h2>🏃 Workouts This Week</h2>
+          <p>4</p>
+        </div>
+        <div class="card" onclick="toggleSection('weightSection')">
+          <h2>⚖️ Current Weight</h2>
+          <p>183.2 lbs</p>
+        </div>
+        <div class="card" onclick="toggleSection('birthdaysSection')">
+          <h2>🎂 Birthdays This Week</h2>
+          <p>2</p>
+        </div>
+      </div>
+
+      <div id="workoutsSection" class="hidden section">
+        <h3>📅 Last 2 Weeks of Workouts</h3>
+        <p>[Workout log will go here]</p>
+      </div>
+
+      <div id="weightSection" class="hidden section">
+        <h3>📈 Weight Chart</h3>
+        <p>[Weight chart with filters]</p>
+      </div>
+
+      <div id="birthdaysSection" class="hidden section">
+        <h3>🎉 Birthdays This Week</h3>
+        <p>[Birthday list will go here]</p>
+        <form>
+          <input type="text" placeholder="Name" required />
+          <input type="date" required />
+          <input type="number" placeholder="Age (optional)" />
+          <textarea placeholder="Notes (optional)"></textarea>
+          <button type="submit">Add Birthday</button>
+        </form>
+      </div>
+    </div>
+
+    <!-- Insights Tab -->
+    <div id="insights" class="tab hidden">
+      <h3>📊 Weekly Insights</h3>
+      <p>[This will show generated insights based on your data.]</p>
+    </div>
+
+    <!-- Settings Tab -->
+    <div id="settings" class="tab hidden">
+      <h3>⚙️ Export Your Data</h3>
+      <p>[Download links to export workouts, weights, or birthdays]</p>
+    </div>
+
   </div>
 
-  <div class="cards">
-    <div class="card" onclick="alert('Show Workouts')">
-      <h2>🏃 Workouts This Week</h2>
-      <p id="workouts-count">4</p>
-    </div>
+  <script>
+    function showTab(id) {
+      document.querySelectorAll(".tab").forEach(t => t.classList.add("hidden"));
+      document.getElementById(id).classList.remove("hidden");
+    }
 
-    <div class="card" onclick="alert('Show Weight Chart')">
-      <h2>⚖️ Current Weight</h2>
-      <p id="current-weight">183.2 lbs</p>
-    </div>
-
-    <div class="card" onclick="alert('Show Birthdays')">
-      <h2>🎂 Birthdays This Week</h2>
-      <p id="birthday-count">2</p>
-    </div>
-  </div>
+    function toggleSection(id) {
+      const el = document.getElementById(id);
+      el.classList.toggle("hidden");
+    }
+  </script>
 </body>
 </html>
